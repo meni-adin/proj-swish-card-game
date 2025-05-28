@@ -4,6 +4,6 @@
 
 namespace mdn {
     namespace TestUtils {
-        nlohmann::json loadJsonFileContent(const std::string &filepath);
+        nlohmann::json load_json_file_Content(const std::string &filepath);
     }
 }

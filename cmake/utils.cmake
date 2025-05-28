@@ -21,7 +21,6 @@ function(${PROJECT_NAME}_set_compiler_flags)
             -Wdouble-promotion
             -Wimplicit-fallthrough
             -Wno-switch
-            -fmodules-ts
         )
         if(${PROJECT_NAME_UC}_ENABLE_COVERAGE)
             add_compile_options(

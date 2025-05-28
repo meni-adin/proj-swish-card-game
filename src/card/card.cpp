@@ -1,7 +1,7 @@
 
 #include "mdn/card.hpp"
 
-Card::Card(unsigned char dot, unsigned char ring) {
+mdn::Card::Card(unsigned char dot, unsigned char ring) {
     if (cellsNum <= dot)
         throw std::invalid_argument("Dot argument is too big");
     if (cellsNum <= ring)
@@ -12,32 +12,56 @@ Card::Card(unsigned char dot, unsigned char ring) {
 }
 
 unsigned char
-Card::get_dot() const {
+mdn::Card::get_dot() const {
     return dot_;
 }
 
 unsigned char
-Card::get_ring() const {
+mdn::Card::get_ring() const {
     return ring_;
 }
 
-void
-Card::rotate() {
-    static char lut[] = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-    dot_ = lut[dot_];
-    ring_ = lut[ring_];
+unsigned char
+mdn::Card::rotate_element(unsigned char elementPosition) {
+    return cellsNum - 1u - elementPosition;
 }
 
 void
-Card::flip_short() {
-    static char lut[] = {9, 10, 11, 6, 7, 8, 3, 4, 5, 0, 1, 2};
-    dot_ = lut[dot_];
-    ring_ = lut[ring_];
+mdn::Card::rotate() {
+    dot_ = rotate_element(dot_);
+    ring_ = rotate_element(ring_);
+}
+
+unsigned char
+mdn::Card::flip_element_horizontally(unsigned char elementPosition) {
+    unsigned char currentRow, currentCol, newCol;
+
+    currentRow = elementPosition / colsNum;
+    currentCol = elementPosition % colsNum;
+    newCol = colsNum - 1 - currentCol;
+
+    return (currentRow * colsNum) + newCol;
 }
 
 void
-Card::flip_long() {
-    static char lut[] = {2, 1, 0, 5, 4, 3, 8, 7, 6, 11, 10, 9};
-    dot_ = lut[dot_];
-    ring_ = lut[ring_];
+mdn::Card::flip_horizontally() {
+    dot_ = flip_element_horizontally(dot_);
+    ring_ = flip_element_horizontally(ring_);
+}
+
+unsigned char
+mdn::Card::flip_element_vertically(unsigned char elementPosition) {
+    unsigned char currentRow, currentCol, newRow;
+
+    currentRow = elementPosition / colsNum;
+    currentCol = elementPosition % colsNum;
+    newRow = rowsNum - 1 - currentRow;
+
+    return (newRow * colsNum) + currentCol;
+}
+
+void
+mdn::Card::flip_vertically() {
+    dot_ = flip_element_vertically(dot_);
+    ring_ = flip_element_vertically(ring_);
 }

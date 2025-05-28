@@ -1,0 +1,86 @@
+{
+    "positive":
+    [
+        {
+            "original":
+            {
+                "dot": 0,
+                "ring": 1
+            },
+            "rotated":
+            {
+                "dot": 11,
+                "ring": 10
+            },
+            "flipped-horizontally":
+            {
+                "dot": 2,
+                "ring": 1
+            },
+            "flipped-vertically":
+            {
+                "dot": 9,
+                "ring": 10
+            }
+        },
+        {
+            "original":
+            {
+                "dot": 3,
+                "ring": 2
+            },
+            "rotated":
+            {
+                "dot": 8,
+                "ring": 9
+            },
+            "flipped-horizontally":
+            {
+                "dot": 5,
+                "ring": 0
+            },
+            "flipped-vertically":
+            {
+                "dot": 6,
+                "ring": 11
+            }
+        },
+        {
+            "original":
+            {
+                "dot": 0,
+                "ring": 11
+            },
+            "rotated":
+            {
+                "dot": 11,
+                "ring": 0
+            },
+            "flipped-horizontally":
+            {
+                "dot": 2,
+                "ring": 9
+            },
+            "flipped-vertically":
+            {
+                "dot": 9,
+                "ring": 2
+            }
+        }
+    ],
+    "negative":
+    [
+        {
+            "dot": 0,
+            "ring": 0
+        },
+        {
+            "dot": 12,
+            "ring": 0
+        },
+        {
+            "dot": 0,
+            "ring": 12
+        }
+    ]
+}
