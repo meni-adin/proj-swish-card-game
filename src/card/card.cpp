@@ -34,13 +34,13 @@ mdn::Card::rotate() {
 
 unsigned char
 mdn::Card::flip_element_horizontally(unsigned char elementPosition) {
-    unsigned char currentRow, currentCol, newCol;
+    int currentRow, currentCol, newCol;
 
     currentRow = elementPosition / colsNum;
     currentCol = elementPosition % colsNum;
     newCol = colsNum - 1 - currentCol;
 
-    return (currentRow * colsNum) + newCol;
+    return static_cast<unsigned char>((currentRow * colsNum) + newCol);
 }
 
 void
@@ -51,13 +51,13 @@ mdn::Card::flip_horizontally() {
 
 unsigned char
 mdn::Card::flip_element_vertically(unsigned char elementPosition) {
-    unsigned char currentRow, currentCol, newRow;
+    int currentRow, currentCol, newRow;
 
     currentRow = elementPosition / colsNum;
     currentCol = elementPosition % colsNum;
     newRow = rowsNum - 1 - currentRow;
 
-    return (newRow * colsNum) + currentCol;
+    return static_cast<unsigned char>((newRow * colsNum) + currentCol);
 }
 
 void

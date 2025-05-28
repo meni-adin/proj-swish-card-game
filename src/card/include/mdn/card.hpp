@@ -2,7 +2,9 @@
 #ifndef MDN_CARD_HPP
 #define MDN_CARD_HPP
 
+#include <stdexcept>
 #include <vector>
+#include <string>
 
 namespace mdn{
     class Card {
