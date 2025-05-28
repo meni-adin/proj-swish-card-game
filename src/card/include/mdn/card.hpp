@@ -2,37 +2,50 @@
 #ifndef MDN_CARD_HPP
 #define MDN_CARD_HPP
 
+#include <stdexcept>
 #include <vector>
+#include <string>
 
-class Card {
-public:
-    static constexpr char
-        rowsNum{4},
-        colsNum{3},
-        cellsNum{rowsNum * colsNum};
+namespace mdn{
+    class Card {
+    public:
+        static constexpr unsigned char
+            rowsNum{4},
+            colsNum{3},
+            cellsNum{rowsNum * colsNum};
 
-    Card(unsigned char dot, unsigned char ring);
+        Card(unsigned char dot, unsigned char ring);
 
-    unsigned char
-    get_dot() const;
+        unsigned char
+        get_dot() const;
 
-    unsigned char
-    get_ring() const;
+        unsigned char
+        get_ring() const;
 
-    void
-    rotate();
+        void
+        rotate();
 
-    void
-    flip_short();
+        void
+        flip_horizontally();
 
-    void
-    flip_long();
+        void
+        flip_vertically();
 
-    static std::vector<Card>
-    import_cards(const std::string &file_name);
+        static std::vector<Card>
+        import_cards(const std::string &file_name);
 
-private:
-    unsigned char dot_, ring_;
-};
+    private:
+        unsigned char dot_, ring_;
+
+        unsigned char
+        rotate_element(unsigned char element);
+
+        unsigned char
+        flip_element_horizontally(unsigned char element);
+
+        unsigned char
+        flip_element_vertically(unsigned char element);
+    };
+}
 
 #endif // MDN_CARD_HPP
