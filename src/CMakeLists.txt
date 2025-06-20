@@ -14,4 +14,5 @@ target_link_libraries(${TARGET_NAME}
     PRIVATE ncurses
 )
 
+add_subdirectory(board)
 add_subdirectory(card)

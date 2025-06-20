@@ -3,23 +3,28 @@
 #define MDN_CARD_HPP
 
 #include <stdexcept>
-#include <vector>
 #include <string>
+#include <vector>
 
-namespace mdn{
+namespace mdn {
     class Card {
     public:
-        static constexpr unsigned char
+        static constexpr uint8_t
             rowsNum{4},
             colsNum{3},
             cellsNum{rowsNum * colsNum};
 
-        Card(unsigned char dot, unsigned char ring);
+        Card(uint8_t dot, uint8_t ring);
 
-        unsigned char
+        Card(const Card &cardToCopy);
+
+        bool
+        operator==(const Card &rhs) const;
+
+        uint8_t
         get_dot() const;
 
-        unsigned char
+        uint8_t
         get_ring() const;
 
         void
@@ -31,21 +36,24 @@ namespace mdn{
         void
         flip_vertically();
 
+        Card
+        normalize(const Card &card);
+
         static std::vector<Card>
         import_cards(const std::string &file_name);
 
     private:
-        unsigned char dot_, ring_;
+        uint8_t dot_, ring_;
 
-        unsigned char
-        rotate_element(unsigned char element);
+        uint8_t
+        rotate_element(uint8_t element);
 
-        unsigned char
-        flip_element_horizontally(unsigned char element);
+        uint8_t
+        flip_element_horizontally(uint8_t element);
 
-        unsigned char
-        flip_element_vertically(unsigned char element);
+        uint8_t
+        flip_element_vertically(uint8_t element);
     };
-}
+}  // namespace mdn
 
-#endif // MDN_CARD_HPP
+#endif  // MDN_CARD_HPP
