@@ -8,10 +8,11 @@ cmake_language(CALL ${PROJECT_NAME}_fetch_content_wrapper
 cmake_language(CALL ${PROJECT_NAME}_fetch_content_wrapper
     json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
-    GIT_TAG        origin/main
+    GIT_TAG        origin/master
 )
 
 enable_testing()
 
+add_subdirectory(board_test)
 add_subdirectory(card_test)
 add_subdirectory(test_utils)

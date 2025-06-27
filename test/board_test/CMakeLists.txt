@@ -1,9 +1,9 @@
-set(TARGET_NAME mdn_card_test)
+set(TARGET_NAME mdn_board_test)
 
 include(GoogleTest)
 
 set(TARGET_SOURCES
-    "card_test.cpp"
+    "board_test.cpp"
 )
 
 add_executable(${TARGET_NAME}
@@ -12,7 +12,7 @@ add_executable(${TARGET_NAME}
 
 target_link_libraries(${TARGET_NAME}
     PRIVATE GTest::gmock
-    PRIVATE mdn_Card
+    PRIVATE mdn_Board
     PRIVATE mdn_test_utils
     PRIVATE nlohmann_json
 )

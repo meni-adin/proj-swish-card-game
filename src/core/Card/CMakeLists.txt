@@ -1,7 +1,7 @@
-set(TARGET_NAME mdn_card)
+set(TARGET_NAME mdn_Card)
 
 set(TARGET_SOURCES
-    "card.cpp"
+    "Card.cpp"
 )
 
 add_library(${TARGET_NAME} STATIC

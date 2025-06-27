@@ -1,4 +1,4 @@
-set(TARGET_NAME mdn_main)
+set(TARGET_NAME mdn_game)
 
 set(TARGET_SOURCES
     "main.cpp"
@@ -9,7 +9,9 @@ add_executable(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME}
-    PUBLIC mdn_card
+    PRIVATE mdn_Card
+    PRIVATE nlohmann_json
+    PRIVATE ncurses
 )
 
-add_subdirectory(card)
+add_subdirectory(core)

@@ -1,45 +1,173 @@
 #include <filesystem>
 #include <gmock/gmock.h>
+#include <tuple>
 
-#include "mdn/card.hpp"
+#include "mdn/Card.hpp"
 #include "mdn/test_utils.hpp"
 #include "nlohmann/json.hpp"
 
 using namespace testing;
 
+struct CardInitializer {
+    mdn::Card::index_t dot, ring;
+};
+
+const nlohmann::json &
+get_json() {
+    static nlohmann::json jsonContent;
+    jsonContent = mdn::TestUtils::load_json_file_Content(MDN_CARD_TEST_TESTS_DATA_FILE_PATH);
+    return jsonContent;
+}
+
 namespace {
-    std::vector<std::pair<std::string, bool>> loadTestsData(const std::string &filepath) {
-        nlohmann::json jsonContent;
-        std::vector<std::pair<std::string, bool>> testCases;
+    class CardCreation : public ::testing::TestWithParam<CardInitializer> {};
 
-        jsonContent = mdn::TestUtils::loadJsonFileContent(filepath);
+    TEST_P(CardCreation, createCard) {
+        const auto &original = GetParam();
+        mdn::Card(original.dot, original.ring);
+    }
 
-        for (const auto &item : jsonContent) {
-            testCases.emplace_back(
-                item["input"].get<std::string>(),
-                item["expected"].get<bool>());
+    std::vector<CardInitializer>
+    load_card_creation_tests_data() {
+        std::vector<CardInitializer> testCases;
+        const auto                   jsonContent = get_json();
+
+        for (const auto &item : jsonContent["positive"]) {
+            CardInitializer original{item["original"]["dot"].get<mdn::Card::index_t>(), item["original"]["ring"].get<mdn::Card::index_t>()};
+            testCases.emplace_back(original);
         }
 
         return testCases;
     }
-}
 
+    INSTANTIATE_TEST_SUITE_P(
+        CardCreationTestSuit,
+        CardCreation,
+        ValuesIn(load_card_creation_tests_data()));
+}  // namespace
 
-class CardTestSuit : public ::testing::TestWithParam<std::pair<std::string, bool>> {};
+namespace {
+    class CardRotation : public ::testing::TestWithParam<std::tuple<CardInitializer, CardInitializer>> {};
 
-TEST_P(CardTestSuit, isUniqueTest) {
-    const auto& [input, expected] = GetParam();
-    ASSERT_EQ(mdn::chapter_01_problem_01_solution::isUnique(input), expected)
-        << "Failed for input: " << input;
-}
+    TEST_P(CardRotation, createCard) {
+        const auto &[original, rotated] = GetParam();
+        mdn::Card card{original.dot, original.ring};
+        card.rotate();
+        ASSERT_EQ(card.get_dot(), rotated.dot);
+        ASSERT_EQ(card.get_ring(), rotated.ring);
+    }
 
-INSTANTIATE_TEST_SUITE_P(
-    CardCreationTestSuit,
-    CardTestSuit,
-    ValuesIn(loadTestsData(MDN_CHAPTER_01_PROBLEM_01_TEST_TESTS_DATA_FILE_PATH))
-);
+    std::vector<std::tuple<CardInitializer, CardInitializer>>
+    load_card_rotation_tests_data() {
+        std::vector<std::tuple<CardInitializer, CardInitializer>> testCases;
+        const auto                                                jsonContent = get_json();
 
-int main(int argc, char *argv[]) {
+        for (const auto &item : jsonContent["positive"]) {
+            CardInitializer original{item["original"]["dot"].get<mdn::Card::index_t>(), item["original"]["ring"].get<mdn::Card::index_t>()};
+            CardInitializer rotated{item["rotated"]["dot"].get<mdn::Card::index_t>(), item["rotated"]["ring"].get<mdn::Card::index_t>()};
+            testCases.emplace_back(original, rotated);
+        }
+
+        return testCases;
+    }
+
+    INSTANTIATE_TEST_SUITE_P(
+        CardRotationTestSuit,
+        CardRotation,
+        ValuesIn(load_card_rotation_tests_data()));
+}  // namespace
+
+namespace {
+    class CardFlippingHorizontally : public ::testing::TestWithParam<std::tuple<CardInitializer, CardInitializer>> {};
+
+    TEST_P(CardFlippingHorizontally, createCard) {
+        const auto &[original, flipped_horizontally] = GetParam();
+        mdn::Card card{original.dot, original.ring};
+        card.flip_horizontally();
+        ASSERT_EQ(card.get_dot(), flipped_horizontally.dot);
+        ASSERT_EQ(card.get_ring(), flipped_horizontally.ring);
+    }
+
+    std::vector<std::tuple<CardInitializer, CardInitializer>>
+    load_card_flipping_horizontally_tests_data() {
+        std::vector<std::tuple<CardInitializer, CardInitializer>> testCases;
+        const auto                                                jsonContent = get_json();
+
+        for (const auto &item : jsonContent["positive"]) {
+            CardInitializer original{item["original"]["dot"].get<mdn::Card::index_t>(), item["original"]["ring"].get<mdn::Card::index_t>()};
+            CardInitializer flipped_horizontally{item["flipped-horizontally"]["dot"].get<mdn::Card::index_t>(), item["flipped-horizontally"]["ring"].get<mdn::Card::index_t>()};
+            testCases.emplace_back(original, flipped_horizontally);
+        }
+
+        return testCases;
+    }
+
+    INSTANTIATE_TEST_SUITE_P(
+        CardFlippingHorizontallyTestSuit,
+        CardFlippingHorizontally,
+        ValuesIn(load_card_flipping_horizontally_tests_data()));
+}  // namespace
+
+namespace {
+    class CardFlippingVertically : public ::testing::TestWithParam<std::tuple<CardInitializer, CardInitializer>> {};
+
+    TEST_P(CardFlippingVertically, createCard) {
+        const auto &[original, flipped_vertically] = GetParam();
+        mdn::Card card{original.dot, original.ring};
+        card.flip_vertically();
+        ASSERT_EQ(card.get_dot(), flipped_vertically.dot);
+        ASSERT_EQ(card.get_ring(), flipped_vertically.ring);
+    }
+
+    std::vector<std::tuple<CardInitializer, CardInitializer>>
+    load_card_flipping_vertically_tests_data() {
+        std::vector<std::tuple<CardInitializer, CardInitializer>> testCases;
+        const auto                                                jsonContent = get_json();
+
+        for (const auto &item : jsonContent["positive"]) {
+            CardInitializer original{item["original"]["dot"].get<mdn::Card::index_t>(), item["original"]["ring"].get<mdn::Card::index_t>()};
+            CardInitializer flipped_vertically{item["flipped-vertically"]["dot"].get<mdn::Card::index_t>(), item["flipped-vertically"]["ring"].get<mdn::Card::index_t>()};
+            testCases.emplace_back(original, flipped_vertically);
+        }
+
+        return testCases;
+    }
+
+    INSTANTIATE_TEST_SUITE_P(
+        CardFlippingVerticallyTestSuit,
+        CardFlippingVertically,
+        ValuesIn(load_card_flipping_vertically_tests_data()));
+}  // namespace
+
+namespace {
+    class CardNegativeTestSuit : public ::testing::TestWithParam<CardInitializer> {};
+
+    TEST_P(CardNegativeTestSuit, createCardNegative) {
+        const auto &input = GetParam();
+        EXPECT_THROW(mdn::Card(input.dot, input.ring), std::invalid_argument);
+    }
+
+    std::vector<CardInitializer>
+    load_card_creation_negative_tests_data() {
+        std::vector<CardInitializer> testCases;
+        const auto                   jsonContent = get_json();
+
+        for (const auto &item : jsonContent["negative"]) {
+            CardInitializer cardInitializer{item["dot"].get<mdn::Card::index_t>(), item["ring"].get<mdn::Card::index_t>()};
+            testCases.emplace_back(cardInitializer);
+        }
+
+        return testCases;
+    }
+
+    INSTANTIATE_TEST_SUITE_P(
+        CardCreationNegativeTestSuit,
+        CardNegativeTestSuit,
+        ValuesIn(load_card_creation_negative_tests_data()));
+}  // namespace
+
+int
+main(int argc, char *argv[]) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
