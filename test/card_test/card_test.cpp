@@ -2,14 +2,14 @@
 #include <gmock/gmock.h>
 #include <tuple>
 
-#include "mdn/card.hpp"
+#include "mdn/Card.hpp"
 #include "mdn/test_utils.hpp"
 #include "nlohmann/json.hpp"
 
 using namespace testing;
 
 struct CardInitializer {
-    uint8_t dot, ring;
+    mdn::Card::index_t dot, ring;
 };
 
 const nlohmann::json &
@@ -33,7 +33,7 @@ namespace {
         const auto                   jsonContent = get_json();
 
         for (const auto &item : jsonContent["positive"]) {
-            CardInitializer original{item["original"]["dot"].get<uint8_t>(), item["original"]["ring"].get<uint8_t>()};
+            CardInitializer original{item["original"]["dot"].get<mdn::Card::index_t>(), item["original"]["ring"].get<mdn::Card::index_t>()};
             testCases.emplace_back(original);
         }
 
@@ -55,10 +55,6 @@ namespace {
         card.rotate();
         ASSERT_EQ(card.get_dot(), rotated.dot);
         ASSERT_EQ(card.get_ring(), rotated.ring);
-
-        static uint8_t lut[] = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-        ASSERT_EQ(card.get_dot(), lut[original.dot]);
-        ASSERT_EQ(card.get_ring(), lut[original.ring]);
     }
 
     std::vector<std::tuple<CardInitializer, CardInitializer>>
@@ -67,8 +63,8 @@ namespace {
         const auto                                                jsonContent = get_json();
 
         for (const auto &item : jsonContent["positive"]) {
-            CardInitializer original{item["original"]["dot"].get<uint8_t>(), item["original"]["ring"].get<uint8_t>()};
-            CardInitializer rotated{item["rotated"]["dot"].get<uint8_t>(), item["rotated"]["ring"].get<uint8_t>()};
+            CardInitializer original{item["original"]["dot"].get<mdn::Card::index_t>(), item["original"]["ring"].get<mdn::Card::index_t>()};
+            CardInitializer rotated{item["rotated"]["dot"].get<mdn::Card::index_t>(), item["rotated"]["ring"].get<mdn::Card::index_t>()};
             testCases.emplace_back(original, rotated);
         }
 
@@ -90,10 +86,6 @@ namespace {
         card.flip_horizontally();
         ASSERT_EQ(card.get_dot(), flipped_horizontally.dot);
         ASSERT_EQ(card.get_ring(), flipped_horizontally.ring);
-
-        static uint8_t lut[] = {2, 1, 0, 5, 4, 3, 8, 7, 6, 11, 10, 9};
-        ASSERT_EQ(card.get_dot(), lut[original.dot]);
-        ASSERT_EQ(card.get_ring(), lut[original.ring]);
     }
 
     std::vector<std::tuple<CardInitializer, CardInitializer>>
@@ -102,8 +94,8 @@ namespace {
         const auto                                                jsonContent = get_json();
 
         for (const auto &item : jsonContent["positive"]) {
-            CardInitializer original{item["original"]["dot"].get<uint8_t>(), item["original"]["ring"].get<uint8_t>()};
-            CardInitializer flipped_horizontally{item["flipped-horizontally"]["dot"].get<uint8_t>(), item["flipped-horizontally"]["ring"].get<uint8_t>()};
+            CardInitializer original{item["original"]["dot"].get<mdn::Card::index_t>(), item["original"]["ring"].get<mdn::Card::index_t>()};
+            CardInitializer flipped_horizontally{item["flipped-horizontally"]["dot"].get<mdn::Card::index_t>(), item["flipped-horizontally"]["ring"].get<mdn::Card::index_t>()};
             testCases.emplace_back(original, flipped_horizontally);
         }
 
@@ -125,10 +117,6 @@ namespace {
         card.flip_vertically();
         ASSERT_EQ(card.get_dot(), flipped_vertically.dot);
         ASSERT_EQ(card.get_ring(), flipped_vertically.ring);
-
-        static uint8_t lut[] = {9, 10, 11, 6, 7, 8, 3, 4, 5, 0, 1, 2};
-        ASSERT_EQ(card.get_dot(), lut[original.dot]);
-        ASSERT_EQ(card.get_ring(), lut[original.ring]);
     }
 
     std::vector<std::tuple<CardInitializer, CardInitializer>>
@@ -137,8 +125,8 @@ namespace {
         const auto                                                jsonContent = get_json();
 
         for (const auto &item : jsonContent["positive"]) {
-            CardInitializer original{item["original"]["dot"].get<uint8_t>(), item["original"]["ring"].get<uint8_t>()};
-            CardInitializer flipped_vertically{item["flipped-vertically"]["dot"].get<uint8_t>(), item["flipped-vertically"]["ring"].get<uint8_t>()};
+            CardInitializer original{item["original"]["dot"].get<mdn::Card::index_t>(), item["original"]["ring"].get<mdn::Card::index_t>()};
+            CardInitializer flipped_vertically{item["flipped-vertically"]["dot"].get<mdn::Card::index_t>(), item["flipped-vertically"]["ring"].get<mdn::Card::index_t>()};
             testCases.emplace_back(original, flipped_vertically);
         }
 
@@ -165,7 +153,7 @@ namespace {
         const auto                   jsonContent = get_json();
 
         for (const auto &item : jsonContent["negative"]) {
-            CardInitializer cardInitializer{item["dot"].get<uint8_t>(), item["ring"].get<uint8_t>()};
+            CardInitializer cardInitializer{item["dot"].get<mdn::Card::index_t>(), item["ring"].get<mdn::Card::index_t>()};
             testCases.emplace_back(cardInitializer);
         }
 

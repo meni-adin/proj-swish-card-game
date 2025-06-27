@@ -1,8 +1,8 @@
 
-#include "mdn/card.hpp"
+#include "mdn/Card.hpp"
 
 namespace mdn {
-    Card::Card(uint8_t dot, uint8_t ring) {
+    Card::Card(Card::index_t dot, Card::index_t ring) {
         if (cellsNum <= dot) {
             throw std::invalid_argument("Dot argument is too big");
         }
@@ -15,26 +15,23 @@ namespace mdn {
         dot_ = dot, ring_ = ring;
     }
 
-    Card::Card(const Card &cardToCopy) : dot_{cardToCopy.dot_}, ring_{cardToCopy.ring_} {
-    }
-
     bool
     Card::operator==(const Card &rhs) const {
         return (this->dot_ == rhs.dot_) && (this->ring_ == rhs.ring_);
     }
 
-    uint8_t
+    Card::index_t
     Card::get_dot() const {
         return dot_;
     }
 
-    uint8_t
+    Card::index_t
     Card::get_ring() const {
         return ring_;
     }
 
-    uint8_t
-    Card::rotate_element(uint8_t elementPosition) {
+    Card::index_t
+    Card::rotate_element(Card::index_t elementPosition) {
         return cellsNum - 1u - elementPosition;
     }
 
@@ -44,15 +41,15 @@ namespace mdn {
         ring_ = rotate_element(ring_);
     }
 
-    uint8_t
-    Card::flip_element_horizontally(uint8_t elementPosition) {
+    Card::index_t
+    Card::flip_element_horizontally(Card::index_t elementPosition) {
         int currentRow, currentCol, newCol;
 
         currentRow = elementPosition / colsNum;
         currentCol = elementPosition % colsNum;
         newCol     = colsNum - 1 - currentCol;
 
-        return static_cast<uint8_t>((currentRow * colsNum) + newCol);
+        return static_cast<Card::index_t>((currentRow * colsNum) + newCol);
     }
 
     void
@@ -61,15 +58,15 @@ namespace mdn {
         ring_ = flip_element_horizontally(ring_);
     }
 
-    uint8_t
-    Card::flip_element_vertically(uint8_t elementPosition) {
+    Card::index_t
+    Card::flip_element_vertically(Card::index_t elementPosition) {
         int currentRow, currentCol, newRow;
 
         currentRow = elementPosition / colsNum;
         currentCol = elementPosition % colsNum;
         newRow     = rowsNum - 1 - currentRow;
 
-        return static_cast<uint8_t>((newRow * colsNum) + currentCol);
+        return static_cast<Card::index_t>((newRow * colsNum) + currentCol);
     }
 
     void

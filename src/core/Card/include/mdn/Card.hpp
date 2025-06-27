@@ -9,22 +9,22 @@
 namespace mdn {
     class Card {
     public:
-        static constexpr uint8_t
+        using index_t = uint8_t;
+
+        static constexpr index_t
             rowsNum{4},
             colsNum{3},
             cellsNum{rowsNum * colsNum};
 
-        Card(uint8_t dot, uint8_t ring);
-
-        Card(const Card &cardToCopy);
+        Card(index_t dot, index_t ring);
 
         bool
         operator==(const Card &rhs) const;
 
-        uint8_t
+        index_t
         get_dot() const;
 
-        uint8_t
+        index_t
         get_ring() const;
 
         void
@@ -43,16 +43,16 @@ namespace mdn {
         import_cards(const std::string &file_name);
 
     private:
-        uint8_t dot_, ring_;
+        index_t dot_, ring_;
 
-        uint8_t
-        rotate_element(uint8_t element);
+        index_t
+        rotate_element(index_t element);
 
-        uint8_t
-        flip_element_horizontally(uint8_t element);
+        index_t
+        flip_element_horizontally(index_t element);
 
-        uint8_t
-        flip_element_vertically(uint8_t element);
+        index_t
+        flip_element_vertically(index_t element);
     };
 }  // namespace mdn
 

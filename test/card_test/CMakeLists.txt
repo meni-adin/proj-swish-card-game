@@ -12,7 +12,7 @@ add_executable(${TARGET_NAME}
 
 target_link_libraries(${TARGET_NAME}
     PRIVATE GTest::gmock
-    PRIVATE mdn_card
+    PRIVATE mdn_Card
     PRIVATE mdn_test_utils
     PRIVATE nlohmann_json
 )

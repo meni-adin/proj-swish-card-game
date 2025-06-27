@@ -9,10 +9,9 @@ add_executable(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME}
-    PRIVATE mdn_card
+    PRIVATE mdn_Card
     PRIVATE nlohmann_json
     PRIVATE ncurses
 )
 
-add_subdirectory(board)
-add_subdirectory(card)
+add_subdirectory(core)

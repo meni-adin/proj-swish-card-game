@@ -1,7 +1,7 @@
-set(TARGET_NAME mdn_card)
+set(TARGET_NAME mdn_Board)
 
 set(TARGET_SOURCES
-    "card.cpp"
+    "Board.cpp"
 )
 
 add_library(${TARGET_NAME} STATIC
@@ -10,4 +10,8 @@ add_library(${TARGET_NAME} STATIC
 
 target_include_directories(${TARGET_NAME}
     PUBLIC "include"
+)
+
+target_link_libraries(${TARGET_NAME}
+    PUBLIC mdn_Card
 )

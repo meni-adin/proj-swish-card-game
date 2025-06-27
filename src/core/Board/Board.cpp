@@ -1,8 +1,8 @@
 
-#include "mdn/board.hpp"
+#include "mdn/Board.hpp"
 
 namespace mdn {
-    Board::Board(uint8_t rowsNum, uint8_t colsNum) :
+    Board::Board(Board::index_t rowsNum, Board::index_t colsNum) :
         rowsNum{rowsNum}, colsNum{colsNum} {
         rows.resize(rowsNum);
         for (auto &row : rows) {
@@ -10,12 +10,12 @@ namespace mdn {
         }
     }
 
-    uint8_t
+    Board::index_t
     Board::get_rows_num() const {
         return rowsNum;
     }
 
-    uint8_t
+    Board::index_t
     Board::get_cols_num() const {
         return colsNum;
     }
@@ -33,6 +33,7 @@ namespace mdn {
     Board::set_card_at(const CardCoordinates &cardCoordinates, std::unique_ptr<Card> cardPtr) {
         rows[cardCoordinates.row][cardCoordinates.col] = std::move(cardPtr);
     }
+
     void
     Board::validateCardCoordinates(const CardCoordinates &cardCoordinates) const {
         if (cardCoordinates.row >= rowsNum) {

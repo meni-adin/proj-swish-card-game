@@ -1,3 +1,82 @@
 {
-    "dummy": "value"
+    "boardDimensions":
+    {
+        "rowsNum": 4,
+        "colsNum": 4
+    },
+    "boardCards":
+    [
+        [
+            {
+                "dot": 0,
+                "ring": 4
+            },
+            {
+                "dot": 0,
+                "ring": 5
+            },
+            {
+                "dot": 0,
+                "ring": 6
+            },
+            {
+                "dot": 0,
+                "ring": 7
+            }
+        ],
+        [
+            {
+                "dot": 1,
+                "ring": 4
+            },
+            {
+                "dot": 1,
+                "ring": 5
+            },
+            {
+                "dot": 1,
+                "ring": 6
+            },
+            {
+                "dot": 1,
+                "ring": 7
+            }
+        ],
+        [
+            {
+                "dot": 2,
+                "ring": 4
+            },
+            {
+                "dot": 2,
+                "ring": 5
+            },
+            {
+                "dot": 2,
+                "ring": 6
+            },
+            {
+                "dot": 2,
+                "ring": 7
+            }
+        ],
+        [
+            {
+                "dot": 3,
+                "ring": 4
+            },
+            {
+                "dot": 3,
+                "ring": 5
+            },
+            {
+                "dot": 3,
+                "ring": 6
+            },
+            {
+                "dot": 3,
+                "ring": 7
+            }
+        ]
+    ]
 }

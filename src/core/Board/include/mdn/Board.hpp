@@ -6,22 +6,25 @@
 #include <string>
 #include <vector>
 
-#include "mdn/card.hpp"
+#include "mdn/Card.hpp"
 
 namespace mdn {
-    struct CardCoordinates {
-        uint8_t row;
-        uint8_t col;
-    };
 
     class Board {
     public:
-        Board(uint8_t rowsNum, uint8_t colsNum);
+        using index_t = uint8_t;
 
-        uint8_t
+        struct CardCoordinates {
+            index_t row;
+            index_t col;
+        };
+
+        Board(index_t rowsNum, index_t colsNum);
+
+        index_t
         get_rows_num() const;
 
-        uint8_t
+        index_t
         get_cols_num() const;
 
         const mdn::Card &
@@ -31,11 +34,11 @@ namespace mdn {
         set_card_at(const CardCoordinates &cardCoordinates, std::unique_ptr<Card> cardPtr);
 
     private:
-        const uint8_t                                        rowsNum, colsNum;
+        const index_t                                        rowsNum, colsNum;
         std::vector<std::vector<std::unique_ptr<mdn::Card>>> rows;
 
         void
-        validateCardCoordinates(const CardCoordinates &cardCoordinates) const ;
+        validateCardCoordinates(const CardCoordinates &cardCoordinates) const;
     };
 }  // namespace mdn
 
